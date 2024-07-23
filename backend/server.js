@@ -1,6 +1,7 @@
 // The express app
 require('dotenv').config()
-const express = require('express');
+const express = require('express')
+const stubRoutes = require('./routes/stubs')
 
 // Express app
 const app = express()
@@ -13,9 +14,7 @@ app.use((request, response, next) => {
 })
 
 // Routes
-app.get('/', (request, response) => {
-    response.json({'message': 'Hello, world!'})
-})
+app.use('/api/stubs', stubRoutes)
 
 // Listen for requests on port 
 app.listen(process.env.PORT, () => {
