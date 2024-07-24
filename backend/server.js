@@ -1,7 +1,7 @@
 // The express app
 require('dotenv').config()
 const express = require('express')
-const stubRoutes = require('./routes/stubs')
+const dummyRoutes = require('./routes/dummies')
 const mongoose = require('mongoose')
 
 // Express app
@@ -19,7 +19,7 @@ app.use((request, response, next) => {
 })
 
 // Routes
-app.use('/api/stubs', stubRoutes)
+app.use('/api/', dummyRoutes)
 
 // Connect to database
 mongoose.connect(process.env.MONGO_URI)
