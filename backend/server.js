@@ -8,9 +8,13 @@ const mongoose = require('mongoose')
 const app = express()
 
 // Middleware
+// Parse requests so that body can be accessed later
+app.use(express.json())
+
 // Logs incoming requests
 app.use((request, response, next) => {
     console.log(request.path, request.method)
+    console.log(request.body)
     next()
 })
 
