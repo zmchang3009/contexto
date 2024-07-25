@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
+import { useDummiesContext } from '../hooks/useDummiesContext'
 
 // Components
 import Dummy from '../components/Dummy'
 import DummyForm from '../components/DummyForm'
 
 const Home = () => {
-    const [dummies, setDummies] = useState(null)
+    const {dummies, dispatch} = useDummiesContext()
     
     useEffect(() => {
         const fetchDummies = async () => {
@@ -15,7 +16,8 @@ const Home = () => {
             const json = await response.json()
 
             if (response.ok) {
-                setDummies(json)
+                // Update global state (context) with dispatch function
+                dispatch({type: 'SET_DUMMIES', payload: json})
             }
         }
 

@@ -1,7 +1,9 @@
 // Form to create new dummies
 import { useState } from 'react'
+import { useDummiesContext } from '../hooks/useDummiesContext'
 
 const DummyForm = () => {
+    const { dispatch } = useDummiesContext()
     const [text, setText] = useState('')
     const [rank, setRank] = useState(0)
     const [error, setError] = useState(null)
@@ -29,6 +31,7 @@ const DummyForm = () => {
             setText('')
             setRank(0)
             setError(null)
+            dispatch({type: 'CREATE_DUMMY', payload: json}) // Update global state (context)
             console.log('New dummy added', json)
         }
     }
