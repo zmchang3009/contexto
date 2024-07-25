@@ -1,3 +1,5 @@
+// Dummy component
+
 const Dummy = ({ dummy }) => {
     return (
         <div className='dummy'>
@@ -6,5 +8,6 @@ const Dummy = ({ dummy }) => {
         </div>
     )
 }
+
 
 export default Dummy

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 
 // Components
 import Dummy from '../components/Dummy'
+import DummyForm from '../components/DummyForm'
 
 const Home = () => {
     const [dummies, setDummies] = useState(null)
@@ -24,6 +25,7 @@ const Home = () => {
     return (
         <div className='home'>
             <h1>Home</h1>
+            <DummyForm />
             <div className='dummies'>
                 {/* Run below only if dummies state is defined */}
                 {dummies && dummies.map((dummy) => {
