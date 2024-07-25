@@ -1,7 +1,37 @@
+import { useEffect, useState } from 'react'
+
+// Components
+import Dummy from '../components/Dummy'
+
 const Home = () => {
+    const [dummies, setDummies] = useState(null)
+    
+    useEffect(() => {
+        const fetchDummies = async () => {
+            // React will proxy the below request to the specified server
+            // Addresses CORS. To be updated for production
+            const response = await fetch('/api/dummy/')
+            const json = await response.json()
+
+            if (response.ok) {
+                setDummies(json)
+            }
+        }
+
+        fetchDummies()
+    }, []) // Empty dependency array = Effect only fires once, on page render
+
     return (
         <div className='home'>
             <h1>Home</h1>
+            <div className='dummies'>
+                {/* Run below only if dummies state is defined */}
+                {dummies && dummies.map((dummy) => {
+                    return (
+                        <Dummy key={dummy._id} dummy={dummy}/>
+                    )
+                })}
+            </div>
         </div>
     )
 }
