@@ -22,7 +22,7 @@ const Home = () => {
         }
 
         fetchDummies()
-    }, []) // Empty dependency array = Effect only fires once, on page render
+    }, [dispatch]) // Dependency array: Re-runs useEffect when elements are updated
 
     return (
         <div className='home'>
