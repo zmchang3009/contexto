@@ -47,7 +47,7 @@ def post_embeddings(db, collection, embeddings_dict):
     else:
         print('Embeddings successfully added! \nRetrieving data...')
         ## Printing the data inserted 
-        cursor = collection.find() 
+        cursor = collection.find(limit=5) 
         for doc in cursor: 
             print(doc) 
 
