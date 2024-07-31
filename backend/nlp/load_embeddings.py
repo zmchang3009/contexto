@@ -9,7 +9,7 @@ load_dotenv()
 MONGO_URI = os.getenv('MONGO_URI')
 
 ## Method to load embeddings from database, filtering based on remarks
-def load_embeddings_from_db(db, collection, count=None, exclude=[]):
+def load_embeddings_from_db(client, db, collection, count=None, exclude=[]):
     print('Retrieving embeddings from database...')
     db_embeddings = {}
     client = MongoClient(MONGO_URI)

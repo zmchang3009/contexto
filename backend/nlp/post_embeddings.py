@@ -6,24 +6,18 @@ from pymongo.mongo_client import MongoClient
 from load_embeddings import *
 from word_checks import *
 
-load_dotenv()
-MONGO_URI = os.getenv('MONGO_URI')
 
-def post_embeddings(db, collection, embeddings_dict):
-    ## Establish connection to MongoDB
-    ## Create a new client and connect to the server
-    client = MongoClient(MONGO_URI)
+def post_embeddings(client, db, collection, embeddings_dict):
 
-    ## Send a ping to confirm a successful connection
     try:
+        ## Send a ping to confirm a successful connection
         client.admin.command('ping')
-        print('Successfully connected to MongoDB!')
+        print('Pinged! Successfully connected to MongoDB!')
         
         ## Establish connection to 'embeddings' collection
         db = client.get_database(db)
         collection = db.get_collection(collection)
 
-        ## Add embeddings to database
         print(f'Adding {len(embeddings_dict)} embeddings...')
         for word, embedding in embeddings_dict.items():
             ## Check words before adding to database
@@ -31,14 +25,16 @@ def post_embeddings(db, collection, embeddings_dict):
             remark = ''
             if not match_valid_regex(word):
                 remark = 'invalid_regex'
-            if is_stopword(word):
+            elif is_stopword(word):
                 remark = 'stopword'
 
             doc = {
                 'word': word,
                 'embedding': embedding,
                 'remark': remark
-            } 
+            }
+
+            ## Add embeddings to database
             _ = collection.insert_one(doc)
     
     except Exception as e:
@@ -53,4 +49,11 @@ def post_embeddings(db, collection, embeddings_dict):
 
 
 if __name__ == '__main__':
-    post_embeddings(load_embeddings_from_txt(count=10, exclude=['invalid_regex']))
+    load_dotenv()
+    MONGO_URI = os.getenv('MONGO_URI')
+
+    ## Create a new client and connect to the server
+    client = MongoClient(MONGO_URI)
+
+    embeddings = load_embeddings_from_txt(count=10, exclude=['invalid_regex'])
+    post_embeddings(client, 'test', 'embeddings', embeddings)
