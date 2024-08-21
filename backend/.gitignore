@@ -1,0 +1,11 @@
+# Environment variables
+/.env
+
+# Node modules
+/node_modules
+
+# Python cache
+/nlp/__pycache__
+
+# GloVe embedding file
+/nlp/glove_6B_50d.txt
