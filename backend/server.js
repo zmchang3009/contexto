@@ -2,6 +2,8 @@
 require('dotenv').config()
 const express = require('express')
 const dummyRoutes = require('./routes/dummies')
+const embeddingRoutes = require('./routes/embeddings')
+const puzzleRoutes = require('./routes/puzzles')
 const mongoose = require('mongoose')
 
 // Express app
@@ -20,6 +22,8 @@ app.use((request, response, next) => {
 
 // Routes
 app.use('/api/', dummyRoutes)
+app.use('/api/', embeddingRoutes)
+app.use('/api/', puzzleRoutes)
 
 // Connect to database
 mongoose.connect(process.env.MONGO_URI)
@@ -33,3 +37,13 @@ mongoose.connect(process.env.MONGO_URI)
         console.log(error)
     })
 
+// Handling connection events
+const db = mongoose.connection;
+ 
+db.on('error', (error) => {
+    console.error('MongoDB connection error:', error);
+});
+ 
+db.on('disconnected', () => {
+    console.log('Disconnected from MongoDB');
+});
