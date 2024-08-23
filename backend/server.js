@@ -1,15 +1,18 @@
 // The express app
 require('dotenv').config()
 const express = require('express')
+const mongoose = require('mongoose')
+const path = require('path')
 const dummyRoutes = require('./routes/dummies')
 const embeddingRoutes = require('./routes/embeddings')
 const puzzleRoutes = require('./routes/puzzles')
-const mongoose = require('mongoose')
 
 // Express app
 const app = express()
 
 // Middleware
+// Serve frontend (ensure that a build of React app is available)
+app.use(express.static(path.join(__dirname, '..', 'frontend', 'build')));
 // Parse requests so that body can be accessed later
 app.use(express.json())
 
@@ -24,6 +27,10 @@ app.use((request, response, next) => {
 app.use('/api/', dummyRoutes)
 app.use('/api/', embeddingRoutes)
 app.use('/api/', puzzleRoutes)
+// Handle React routing using catch-all route. Server serves the React app
+app.get('*', (request, response) => {
+    response.sendFile(path.join(__dirname, '..', 'frontend', 'build', 'index.html'));
+});
 
 // Connect to database
 mongoose.connect(process.env.MONGO_URI)
