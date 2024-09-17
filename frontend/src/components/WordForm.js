@@ -1,6 +1,7 @@
 // Form for submitting word guesses
 import { useState } from 'react'
 import { useWordsContext } from '../hooks/useWordsContext'
+import wordChecker from '../utils/wordChecker'
 
 const WordForm = () => {
     const { dispatch } = useWordsContext()
@@ -10,19 +11,23 @@ const WordForm = () => {
     const submitHandler = async (e) => {
         e.preventDefault() // Stop automatic page reload
 
-        // Get response from server
-        const response = await fetch(`/api/puzzle/${word}`)
-
-        const json = await response.json()
+        // Get response from wordChecker
+        const puzzleApi = `/api/puzzle/${word}`
+        const response = await wordChecker(word, puzzleApi)
+        console.log('word checker output', response)
+        
+        // Deprecated: Fetch from API directly
+        // const response = await fetch(`/api/puzzle/${word}`)
+        // const json = await response.json()
 
         if (!response.ok) {
-            setError(response.error)
+            setError(response.message)
             console.log(error)
         } else {
             // Reset states
             setWord('')
             setError(null)
-            dispatch({type: 'ADD_WORD', payload: json}) // Update global state locally
+            dispatch({type: 'ADD_WORD', payload: response.data}) // Update global state locally
         }
     }
 
