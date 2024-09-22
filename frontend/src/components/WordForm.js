@@ -4,7 +4,7 @@ import { useWordsContext } from '../hooks/useWordsContext'
 import wordChecker from '../utils/wordChecker'
 
 const WordForm = () => {
-    const { dispatch } = useWordsContext()
+    const {words, dispatch} = useWordsContext()
     const [word, setWord] = useState('')
     const [error, setError] = useState(null)
 
@@ -12,8 +12,8 @@ const WordForm = () => {
         e.preventDefault() // Stop automatic page reload
 
         // Get response from wordChecker
-        const puzzleApi = `/api/puzzle/${word}`
-        const response = await wordChecker(word, puzzleApi)
+        const puzzleApi = '/api/puzzle/' // TODO: Update once daily puzzles are ready
+        const response = await wordChecker(word, words, puzzleApi)
         console.log('word checker output', response)
         
         // Deprecated: Fetch from API directly
