@@ -15,10 +15,6 @@ const WordForm = () => {
         const puzzleApi = '/api/puzzle/' // TODO: Update once daily puzzles are ready
         const response = await wordChecker(word, words, puzzleApi)
         console.log('word checker output', response)
-        
-        // Deprecated: Fetch from API directly
-        // const response = await fetch(`/api/puzzle/${word}`)
-        // const json = await response.json()
 
         if (!response.ok) {
             setError(response.message)
