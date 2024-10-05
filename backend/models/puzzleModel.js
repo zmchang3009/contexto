@@ -1,4 +1,4 @@
-// Schema for words (in main word bank)
+// Schema for words (in each puzzle)
 const mongoose = require('mongoose')
 
 // Specify database to connect to

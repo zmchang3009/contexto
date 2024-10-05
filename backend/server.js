@@ -4,6 +4,7 @@ const express = require('express')
 const dummyRoutes = require('./routes/dummies')
 const embeddingRoutes = require('./routes/embeddings')
 const puzzleRoutes = require('./routes/puzzles')
+const userRoutes = require('./routes/users')
 const mongoose = require('mongoose')
 
 // Express app
@@ -15,8 +16,8 @@ app.use(express.json())
 
 // Logs incoming requests
 app.use((request, response, next) => {
-    console.log(request.path, request.method)
-    console.log(request.body)
+    console.log('Request path and method: ', request.path, request.method)
+    console.log('Request body: ', request.body)
     next()
 })
 
@@ -24,6 +25,7 @@ app.use((request, response, next) => {
 app.use('/api/', dummyRoutes)
 app.use('/api/', embeddingRoutes)
 app.use('/api/', puzzleRoutes)
+app.use('/api/', userRoutes)
 
 // Connect to database
 mongoose.connect(process.env.MONGO_URI)
