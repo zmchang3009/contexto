@@ -38,7 +38,32 @@ header a {
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
 }
 
-/* Dummy form */
+/* Puzzle page */
+.puzzle {
+  margin: auto;
+  text-align: center;
+}
+
+/* Word component */
+.word
+ {
+  width: 40%;
+  background: #fff;
+  border-radius: 4px;
+  margin: 5px auto;
+  padding: 2px;
+  position: relative;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.word p {
+  margin: 0px;
+}
+
+/* Forms */
 label, input {
   display: inline
 }
